@@ -1,4 +1,5 @@
-import { Heart, MapPin, Clock, Users, Star, Filter, Search } from 'lucide-react';
+import Link from 'next/link';
+import { Heart, MapPin, Clock, Users, Star, Filter, Search, ArrowRight } from 'lucide-react';
 
 export default function OpportunitiesPage() {
   const opportunities = [
@@ -112,7 +113,7 @@ export default function OpportunitiesPage() {
             Find Your Perfect Volunteering Opportunity
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover meaningful ways to contribute to your community. Filter by location, 
+            Discover meaningful ways to contribute to your community. Filter by location,
             category, and time commitment to find the perfect match for your skills and interests.
           </p>
         </div>
@@ -159,22 +160,27 @@ export default function OpportunitiesPage() {
         {/* Opportunities Grid */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {opportunities.map((opportunity) => (
-            <div key={opportunity.id} className="card hover:shadow-lg transition-shadow duration-300">
+            <div key={opportunity.id} className="card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
               <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
                 <Heart className="h-12 w-12 text-gray-400" />
               </div>
-              
+
               <div className="mb-4">
                 <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mb-2">
                   {opportunity.category}
                 </span>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {opportunity.title}
-                </h3>
+                <Link
+                  href={`/opportunities/${opportunity.id}`}
+                  className="block hover:text-blue-600 transition-colors"
+                >
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-blue-600">
+                    {opportunity.title}
+                  </h3>
+                </Link>
                 <p className="text-gray-600 mb-3">{opportunity.organization}</p>
                 <p className="text-gray-600 text-sm mb-4">{opportunity.description}</p>
               </div>
-              
+
               <div className="space-y-2 mb-4">
                 <div className="flex items-center text-sm text-gray-500">
                   <MapPin className="h-4 w-4 mr-2" />
@@ -207,9 +213,18 @@ export default function OpportunitiesPage() {
                   <Star className="h-4 w-4 text-yellow-400 mr-1" />
                   <span className="text-sm text-gray-600">{opportunity.rating}</span>
                 </div>
-                <button className="btn-primary">
-                  Apply Now
-                </button>
+                <div className="flex space-x-2">
+                  <Link
+                    href={`/opportunities/${opportunity.id}`}
+                    className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline transition-colors flex items-center space-x-1"
+                  >
+                    <span>View Details</span>
+                    <ArrowRight className="h-3 w-3" />
+                  </Link>
+                  <button className="btn-primary">
+                    Apply Now
+                  </button>
+                </div>
               </div>
             </div>
           ))}

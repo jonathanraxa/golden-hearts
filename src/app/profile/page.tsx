@@ -1,324 +1,346 @@
 'use client';
 
-import { useState } from 'react';
-import { Heart, Edit, MapPin, Clock, Star, Calendar, Award, Users } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Heart, User, Mail, Phone, MapPin, Calendar, Clock, Star, Edit, Save, X } from 'lucide-react';
 
 export default function ProfilePage() {
+  const { user, userProfile, loading } = useAuth();
+  const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
-
-  const [profile, setProfile] = useState({
-    firstName: 'Sarah',
-    lastName: 'Johnson',
-    email: 'sarah.johnson@email.com',
-    phone: '+1 (555) 123-4567',
-    location: 'Portland, OR',
-    bio: 'Retired teacher passionate about helping children develop reading skills and supporting community education programs.',
-    interests: ['Education', 'Social Services', 'Community Development'],
-    experience: 'Experienced volunteer',
-    availability: 'Weekdays only',
-    joinDate: 'March 2023'
+  const [editForm, setEditForm] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    location: '',
+    dateOfBirth: '',
+    availability: '',
+    experience: '',
+    interests: [] as string[],
+    bio: ''
   });
 
-  const volunteeringHistory = [
-    {
-      id: 1,
-      title: 'Library Reading Program',
-      organization: 'Public Library',
-      date: 'March 2024',
-      hours: 24,
-      status: 'Active'
-    },
-    {
-      id: 2,
-      title: 'Meals on Wheels Delivery',
-      organization: 'Community Care Services',
-      date: 'January 2024',
-      hours: 18,
-      status: 'Completed'
-    },
-    {
-      id: 3,
-      title: 'Senior Center Activities',
-      organization: 'Golden Years Center',
-      date: 'December 2023',
-      hours: 32,
-      status: 'Completed'
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
     }
-  ];
+  }, [user, loading, router]);
 
-  const achievements = [
-    {
-      id: 1,
-      title: 'First Month Milestone',
-      description: 'Completed your first month of volunteering',
-      date: 'April 2023',
-      icon: '🌟'
-    },
-    {
-      id: 2,
-      title: '50 Hours of Service',
-      description: 'Reached 50 hours of community service',
-      date: 'August 2023',
-      icon: '🏆'
-    },
-    {
-      id: 3,
-      title: 'Community Champion',
-      description: 'Recognized for outstanding community contribution',
-      date: 'December 2023',
-      icon: '👑'
+  useEffect(() => {
+    if (userProfile) {
+      setEditForm({
+        firstName: userProfile.first_name || '',
+        lastName: userProfile.last_name || '',
+        phone: userProfile.phone || '',
+        location: userProfile.location || '',
+        dateOfBirth: userProfile.date_of_birth || '',
+        availability: userProfile.availability || '',
+        experience: userProfile.experience || '',
+        interests: userProfile.interests || [],
+        bio: userProfile.bio || ''
+      });
     }
-  ];
+  }, [userProfile]);
 
-  const stats = {
-    totalHours: 74,
-    opportunities: 3,
-    organizations: 3,
-    rating: 4.9
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setProfile(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSave = () => {
+  const handleSave = async () => {
+    // TODO: Implement profile update logic
+    console.log('Saving profile:', editForm);
     setIsEditing(false);
-    // Save profile changes
-    console.log('Profile updated:', profile);
   };
+
+  const handleCancel = () => {
+    if (userProfile) {
+      setEditForm({
+        firstName: userProfile.first_name || '',
+        lastName: userProfile.last_name || '',
+        phone: userProfile.phone || '',
+        location: userProfile.location || '',
+        dateOfBirth: userProfile.date_of_birth || '',
+        availability: userProfile.availability || '',
+        experience: userProfile.experience || '',
+        interests: userProfile.interests || [],
+        bio: userProfile.bio || ''
+      });
+    }
+    setIsEditing(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-muted flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Profile Header */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-            <div className="flex items-center space-x-4 mb-4 md:mb-0">
-              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
-                <Heart className="h-10 w-10 text-blue-600" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {profile.firstName} {profile.lastName}
-                </h1>
-                <p className="text-gray-600">Member since {profile.joinDate}</p>
-                <div className="flex items-center mt-2">
-                  <Star className="h-4 w-4 text-yellow-400 mr-1" />
-                  <span className="text-sm text-gray-600">{stats.rating} rating</span>
-                </div>
-              </div>
+    <div className="min-h-screen bg-muted py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-primary">My Profile</h1>
+              <p className="text-secondary mt-2">
+                Manage your personal information and volunteering preferences
+              </p>
             </div>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className="btn-secondary flex items-center space-x-2"
-            >
-              <Edit className="h-4 w-4" />
-              <span>{isEditing ? 'Cancel' : 'Edit Profile'}</span>
-            </button>
+            <div className="flex items-center space-x-3">
+              {!isEditing ? (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="btn-primary flex items-center space-x-2"
+                >
+                  <Edit className="h-4 w-4" />
+                  <span>Edit Profile</span>
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={handleSave}
+                    className="btn-primary flex items-center space-x-2"
+                  >
+                    <Save className="h-4 w-4" />
+                    <span>Save Changes</span>
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    className="btn-secondary flex items-center space-x-2"
+                  >
+                    <X className="h-4 w-4" />
+                    <span>Cancel</span>
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Profile Section */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Personal Information */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Profile Card */}
+          <div className="lg:col-span-1">
             <div className="card">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Personal Information</h2>
-              {isEditing ? (
-                <div className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={profile.firstName}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={profile.lastName}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={profile.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                    <input
-                      type="text"
-                      name="location"
-                      value={profile.location}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-                    <textarea
-                      name="bio"
-                      rows={3}
-                      value={profile.bio}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div className="flex space-x-3">
-                    <button onClick={handleSave} className="btn-primary">
-                      Save Changes
-                    </button>
-                    <button onClick={() => setIsEditing(false)} className="btn-secondary">
-                      Cancel
-                    </button>
-                  </div>
+              <div className="text-center">
+                <div className="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                  {userProfile?.first_name?.[0] || user.email?.[0]?.toUpperCase() || 'U'}
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  <div className="flex items-center text-gray-600">
-                    <span className="font-medium w-24">Email:</span>
-                    <span>{profile.email}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <span className="font-medium w-24">Phone:</span>
-                    <span>{profile.phone}</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                    <span>{profile.location}</span>
-                  </div>
-                  <div className="pt-2">
-                    <p className="text-gray-700">{profile.bio}</p>
-                  </div>
-                </div>
-              )}
-            </div>
+                <h2 className="text-2xl font-bold text-primary mb-2">
+                  {userProfile?.first_name} {userProfile?.last_name}
+                </h2>
+                <p className="text-secondary mb-4">{user.email}</p>
 
-            {/* Volunteering Preferences */}
-            <div className="card">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Volunteering Preferences</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Areas of Interest</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {profile.interests.map((interest) => (
-                      <span key={interest} className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-                        {interest}
-                      </span>
-                    ))}
+                <div className="space-y-3 text-left">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-4 w-4 text-muted" />
+                    <span className="text-sm text-secondary">{userProfile?.location || 'Location not set'}</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Clock className="h-4 w-4 text-muted" />
+                    <span className="text-sm text-secondary">{userProfile?.availability || 'Availability not set'}</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Star className="h-4 w-4 text-muted" />
+                    <span className="text-sm text-secondary">{userProfile?.experience || 'Experience not set'}</span>
                   </div>
                 </div>
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Experience Level</h3>
-                  <p className="text-gray-600">{profile.experience}</p>
-                </div>
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Availability</h3>
-                  <p className="text-gray-600">{profile.availability}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Volunteering History */}
-            <div className="card">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Volunteering History</h2>
-              <div className="space-y-4">
-                {volunteeringHistory.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div>
-                      <h3 className="font-medium text-gray-900">{item.title}</h3>
-                      <p className="text-sm text-gray-600">{item.organization}</p>
-                      <p className="text-sm text-gray-500">{item.date}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="flex items-center text-sm text-gray-600 mb-1">
-                        <Clock className="h-4 w-4 mr-1" />
-                        {item.hours} hours
-                      </div>
-                      <span className={`inline-block px-2 py-1 text-xs rounded-full ${item.status === 'Active'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                        }`}>
-                        {item.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Stats */}
+          {/* Profile Details */}
+          <div className="lg:col-span-2">
             <div className="card">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Impact</h3>
-              <div className="space-y-4">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">{stats.totalHours}</div>
-                  <div className="text-sm text-gray-600">Total Hours</div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="text-lg font-semibold text-gray-900">{stats.opportunities}</div>
-                    <div className="text-xs text-gray-600">Opportunities</div>
-                  </div>
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="text-lg font-semibold text-gray-900">{stats.organizations}</div>
-                    <div className="text-xs text-gray-600">Organizations</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <h3 className="text-xl font-semibold text-primary mb-6">Profile Information</h3>
 
-            {/* Achievements */}
-            <div className="card">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Achievements</h3>
-              <div className="space-y-3">
-                {achievements.map((achievement) => (
-                  <div key={achievement.id} className="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg">
-                    <span className="text-2xl">{achievement.icon}</span>
+              <div className="space-y-6">
+                {/* Personal Information */}
+                <div>
+                  <h4 className="text-lg font-medium text-primary mb-4">Personal Information</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="font-medium text-gray-900 text-sm">{achievement.title}</h4>
-                      <p className="text-xs text-gray-600">{achievement.description}</p>
-                      <p className="text-xs text-gray-500">{achievement.date}</p>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        First Name
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={editForm.firstName}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, firstName: e.target.value }))}
+                          className="input-field"
+                        />
+                      ) : (
+                        <p className="text-secondary">{userProfile?.first_name || 'Not provided'}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Last Name
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={editForm.lastName}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, lastName: e.target.value }))}
+                          className="input-field"
+                        />
+                      ) : (
+                        <p className="text-secondary">{userProfile?.last_name || 'Not provided'}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Phone
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="tel"
+                          value={editForm.phone}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
+                          className="input-field"
+                        />
+                      ) : (
+                        <p className="text-secondary">{userProfile?.phone || 'Not provided'}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Date of Birth
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="date"
+                          value={editForm.dateOfBirth}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, dateOfBirth: e.target.value }))}
+                          className="input-field"
+                        />
+                      ) : (
+                        <p className="text-secondary">
+                          {userProfile?.date_of_birth ? new Date(userProfile.date_of_birth).toLocaleDateString() : 'Not provided'}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Location
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={editForm.location}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, location: e.target.value }))}
+                          className="input-field"
+                        />
+                      ) : (
+                        <p className="text-secondary">{userProfile?.location || 'Not provided'}</p>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
 
-            {/* Quick Actions */}
-            <div className="card">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-              <div className="space-y-3">
-                <button className="w-full btn-primary">
-                  Find New Opportunities
-                </button>
-                <button className="w-full btn-secondary">
-                  Update Preferences
-                </button>
-                <button className="w-full btn-secondary">
-                  View Calendar
-                </button>
+                {/* Volunteering Preferences */}
+                <div>
+                  <h4 className="text-lg font-medium text-primary mb-4">Volunteering Preferences</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Availability
+                      </label>
+                      {isEditing ? (
+                        <select
+                          value={editForm.availability}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, availability: e.target.value }))}
+                          className="input-field"
+                        >
+                          <option value="">Select availability</option>
+                          <option value="Weekdays only">Weekdays only</option>
+                          <option value="Weekends only">Weekends only</option>
+                          <option value="Evenings only">Evenings only</option>
+                          <option value="Flexible schedule">Flexible schedule</option>
+                          <option value="One-time events">One-time events</option>
+                          <option value="Regular commitment">Regular commitment</option>
+                        </select>
+                      ) : (
+                        <p className="text-secondary">{userProfile?.availability || 'Not provided'}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-primary mb-2">
+                        Experience Level
+                      </label>
+                      {isEditing ? (
+                        <select
+                          value={editForm.experience}
+                          onChange={(e) => setEditForm(prev => ({ ...prev, experience: e.target.value }))}
+                          className="input-field"
+                        >
+                          <option value="">Select experience level</option>
+                          <option value="Beginner - New to volunteering">Beginner - New to volunteering</option>
+                          <option value="Some Experience - Volunteered occasionally">Some Experience - Volunteered occasionally</option>
+                          <option value="Experienced - Regular volunteer">Experienced - Regular volunteer</option>
+                          <option value="Very Experienced - Long-term volunteer">Very Experienced - Long-term volunteer</option>
+                          <option value="Professional - Work in nonprofit sector">Professional - Work in nonprofit sector</option>
+                        </select>
+                      ) : (
+                        <p className="text-secondary">{userProfile?.experience || 'Not provided'}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Interests */}
+                <div>
+                  <h4 className="text-lg font-medium text-primary mb-4">Interests</h4>
+                  {isEditing ? (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {[
+                        'Animal Welfare', 'Education', 'Healthcare', 'Environment', 'Community Service',
+                        'Food Security', 'Housing', 'Transportation', 'Arts & Culture', 'Sports & Recreation',
+                        'Technology', 'Senior Care', 'Youth Programs', 'Disaster Relief', 'Veterans Support'
+                      ].map((interest) => (
+                        <label key={interest} className="flex items-center space-x-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={editForm.interests.includes(interest)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setEditForm(prev => ({ ...prev, interests: [...prev.interests, interest] }));
+                              } else {
+                                setEditForm(prev => ({ ...prev, interests: prev.interests.filter(i => i !== interest) }));
+                              }
+                            }}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
+                          />
+                          <span className="text-sm text-secondary">{interest}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {userProfile?.interests && userProfile.interests.length > 0 ? (
+                        userProfile.interests.map((interest: string, index: number) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full"
+                          >
+                            {interest}
+                          </span>
+                        ))
+                      ) : (
+                        <p className="text-secondary">No interests selected</p>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

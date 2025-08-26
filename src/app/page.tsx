@@ -1,151 +1,133 @@
 import Link from 'next/link';
 import { Heart, Users, MapPin, Clock, Star, ArrowRight } from 'lucide-react';
 
-export default function Home() {
-  const featuredOpportunities = [
-    {
-      id: 1,
-      title: "Meals on Wheels Delivery",
-      organization: "Community Care Services",
-      location: "Downtown Area",
-      duration: "2-3 hours/week",
-      category: "Food & Nutrition",
-      rating: 4.8,
-      volunteers: 12,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 2,
-      title: "Library Reading Program",
-      organization: "Public Library",
-      location: "Central Library",
-      duration: "1-2 hours/week",
-      category: "Education",
-      rating: 4.9,
-      volunteers: 8,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 3,
-      title: "Community Garden Maintenance",
-      organization: "Green Thumbs Collective",
-      location: "Community Garden",
-      duration: "3-4 hours/week",
-      category: "Environment",
-      rating: 4.7,
-      volunteers: 15,
-      image: "/api/placeholder/300/200"
-    }
-  ];
-
-  const stats = [
-    { number: "2,500+", label: "Active Volunteers" },
-    { number: "150+", label: "Organizations" },
-    { number: "15,000+", label: "Hours Served" },
-    { number: "95%", label: "Satisfaction Rate" }
-  ];
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-muted">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Make a Difference in Your Community
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              Connect with meaningful volunteering opportunities and build lasting relationships. 
-              Perfect for older adults who want to stay active and give back.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/opportunities" className="btn-primary bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-3">
-                Find Opportunities
-              </Link>
-              <Link href="/about" className="btn-secondary bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 text-lg px-8 py-3">
-                Learn More
-              </Link>
-            </div>
+          <div className="flex items-center justify-center space-x-3 mb-6">
+            <Heart className="h-16 w-16 text-red-400" />
+            <h1 className="text-5xl md:text-6xl font-bold">Golden Hearts</h1>
+          </div>
+          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+            Connect with volunteering opportunities and build meaningful relationships in your community. 
+            A platform designed for everyone who wants to make a difference.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/opportunities" className="btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-100">
+              Find Opportunities
+            </Link>
+            <Link href="/register" className="btn-secondary text-lg px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-blue-600">
+              Join Our Community
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600 text-lg">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">2,500+</div>
+              <div className="text-muted">Active Volunteers</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">150+</div>
+              <div className="text-muted">Organizations</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">5,000+</div>
+              <div className="text-muted">Hours Served</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-blue-600">25+</div>
+              <div className="text-muted">Cities</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Opportunities */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Featured Opportunities
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover rewarding ways to contribute to your community. These opportunities are 
-              perfect for older adults looking to make a meaningful impact.
+            <h2 className="text-3xl font-bold text-primary mb-4">Featured Opportunities</h2>
+            <p className="text-secondary text-lg max-w-2xl mx-auto">
+              Discover meaningful ways to give back to your community
             </p>
           </div>
-
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredOpportunities.map((opportunity) => (
-              <div key={opportunity.id} className="card hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-                  <Heart className="h-12 w-12 text-gray-400" />
-                </div>
-                <div className="mb-4">
-                  <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mb-2">
+            {[
+              {
+                title: "Senior Companion Program",
+                organization: "Community Care Services",
+                location: "San Francisco, CA",
+                duration: "2-4 hours/week",
+                volunteers: 12,
+                rating: 4.8,
+                category: "Social Services"
+              },
+              {
+                title: "Urban Garden Maintenance",
+                organization: "Green Thumbs Collective",
+                location: "Oakland, CA",
+                duration: "3-5 hours/week",
+                volunteers: 8,
+                rating: 4.9,
+                category: "Environment"
+              },
+              {
+                title: "Animal Shelter Support",
+                organization: "Paws & Hearts Shelter",
+                location: "San Jose, CA",
+                duration: "4-6 hours/week",
+                volunteers: 15,
+                rating: 4.7,
+                category: "Animal Welfare"
+              }
+            ].map((opportunity, index) => (
+              <div key={index} className="card hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+                <div className="p-6">
+                  <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm font-medium px-3 py-1 rounded-full mb-3">
                     {opportunity.category}
                   </span>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {opportunity.title}
-                  </h3>
-                  <p className="text-gray-600 mb-3">{opportunity.organization}</p>
-                </div>
-                
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-500">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    {opportunity.location}
+                  <h3 className="text-xl font-semibold text-primary mb-2">{opportunity.title}</h3>
+                  <p className="text-secondary mb-4">{opportunity.organization}</p>
+                  
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center text-sm text-muted">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      {opportunity.location}
+                    </div>
+                    <div className="flex items-center text-sm text-muted">
+                      <Clock className="h-4 w-4 mr-2" />
+                      {opportunity.duration}
+                    </div>
+                    <div className="flex items-center text-sm text-muted">
+                      <Users className="h-4 w-4 mr-2" />
+                      {opportunity.volunteers} volunteers
+                    </div>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Clock className="h-4 w-4 mr-2" />
-                    {opportunity.duration}
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Star className="h-4 w-4 text-yellow-400 mr-1" />
+                      <span className="text-sm text-muted">{opportunity.rating}</span>
+                    </div>
+                    <Link href="/opportunities" className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline transition-colors flex items-center space-x-1">
+                      <span>Learn More</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Users className="h-4 w-4 mr-2" />
-                    {opportunity.volunteers} volunteers
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Star className="h-4 w-4 text-yellow-400 mr-1" />
-                    <span className="text-sm text-gray-600">{opportunity.rating}</span>
-                  </div>
-                  <Link href={`/opportunities/${opportunity.id}`} className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center">
-                    View Details
-                    <ArrowRight className="h-4 w-4 ml-1" />
-                  </Link>
                 </div>
               </div>
             ))}
           </div>
-
+          
           <div className="text-center mt-12">
             <Link href="/opportunities" className="btn-primary text-lg px-8 py-3">
               View All Opportunities
@@ -155,46 +137,43 @@ export default function Home() {
       </section>
 
       {/* Why Volunteer Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Volunteer with Golden Hearts?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our platform is specifically designed to help older adults find meaningful ways 
-              to contribute while building lasting connections in their community.
+            <h2 className="text-3xl font-bold text-primary mb-4">Why Volunteer with Golden Hearts?</h2>
+            <p className="text-secondary text-lg max-w-3xl mx-auto">
+              Our platform is designed to make volunteering accessible, meaningful, and enjoyable for everyone
             </p>
           </div>
-
+          
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-blue-600" />
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto">
+                <Heart className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Meaningful Impact</h3>
-              <p className="text-gray-600">
-                Make a real difference in your community with opportunities that match your skills and interests.
+              <h3 className="text-xl font-semibold text-primary">Meaningful Impact</h3>
+              <p className="text-secondary">
+                Connect with causes that matter to you and see the real difference you make in your community
               </p>
             </div>
-
-            <div className="text-center">
-              <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-green-600" />
+            
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto">
+                <Users className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Build Community</h3>
-              <p className="text-gray-600">
-                Connect with like-minded individuals and form lasting friendships while serving together.
+              <h3 className="text-xl font-semibold text-primary">Build Community</h3>
+              <p className="text-secondary">
+                Meet like-minded people, form lasting friendships, and become part of a supportive network
               </p>
             </div>
-
-            <div className="text-center">
-              <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Star className="h-8 w-8 text-purple-600" />
+            
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto">
+                <Clock className="h-8 w-8 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Stay Active</h3>
-              <p className="text-gray-600">
-                Keep your mind and body active with engaging activities that bring purpose to your days.
+              <h3 className="text-xl font-semibold text-primary">Flexible Commitment</h3>
+              <p className="text-secondary">
+                Choose opportunities that fit your schedule and interests, from one-time events to ongoing programs
               </p>
             </div>
           </div>
@@ -202,21 +181,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Make a Difference?
-          </h2>
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
           <p className="text-xl mb-8 text-blue-100">
-            Join thousands of volunteers who are already making an impact in their communities. 
-            Start your volunteering journey today!
+            Join thousands of volunteers who are already making an impact in their communities
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="btn-primary bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-3">
-              Get Started
+            <Link href="/register" className="btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-100">
+              Get Started Today
             </Link>
-            <Link href="/opportunities" className="btn-secondary bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 text-lg px-8 py-3">
-              Browse Opportunities
+            <Link href="/about" className="btn-secondary text-lg px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-blue-600">
+              Learn More
             </Link>
           </div>
         </div>

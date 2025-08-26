@@ -44,23 +44,29 @@ export default function AboutPage() {
 
     const team = [
         {
-            name: "Sarah Johnson",
+            name: "Zach Fetter",
             role: "Founder & CEO",
             bio: "Former social worker with 20+ years experience in community development and senior services.",
-            image: "/api/placeholder/150/150"
+            image: "/zach.jpeg"
         },
         {
-            name: "Michael Chen",
+            name: "Jonathan Raxa",
             role: "Head of Technology",
-            bio: "Tech leader passionate about creating accessible digital solutions for older adults.",
-            image: "/api/placeholder/150/150"
+            bio: "Tech leader passionate about creating accessible digital solutions for all volunteers.",
+            image: "/jon.jpeg"
+        },
+        {
+            name: "David Raxa",
+            role: "Director of Product & Design",
+            bio: "Product and design lead with a passion for creating intuitive and user-friendly digital experiences.",
+            image: "/david.jpeg"
         },
         {
             name: "Dr. Maria Rodriguez",
             role: "Community Director",
-            bio: "Community psychologist specializing in aging and social connection research.",
+            bio: "Community psychologist specializing in social connection and volunteer engagement research.",
             image: "/api/placeholder/150/150"
-        }
+        },
     ];
 
     return (
@@ -73,7 +79,7 @@ export default function AboutPage() {
                             About Golden Hearts
                         </h1>
                         <p className="text-xl md:text-2xl mb-8 text-blue-100">
-                            We're on a mission to connect older adults with meaningful volunteering opportunities,
+                            We're on a mission to connect people of all ages with meaningful volunteering opportunities,
                             building stronger communities one heart at a time.
                         </p>
                     </div>
@@ -82,20 +88,20 @@ export default function AboutPage() {
 
             {/* Mission Section */}
             <section className="py-16 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl mx-auto text-center">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                             Our Mission
                         </h2>
                         <p className="text-xl text-gray-600 leading-relaxed">
                             Golden Hearts was founded with a simple yet powerful vision: to create a world where
-                            every older adult has the opportunity to make a meaningful difference in their community
+                            everyone has the opportunity to make a meaningful difference in their community
                             while building lasting connections and staying active and engaged.
                         </p>
                         <p className="text-xl text-gray-600 leading-relaxed mt-6">
-                            We believe that age is not a barrier to contribution—it's an asset. The wisdom,
-                            experience, and dedication that older adults bring to volunteering creates a unique
-                            and valuable impact that strengthens communities and enriches lives.
+                            While our platform is particularly well-designed for older adults and retirees, we welcome
+                            volunteers of all ages who want to contribute their time, skills, and passion to causes they care about.
+                            We believe that every person, regardless of age, has unique gifts to share with their community.
                         </p>
                     </div>
                 </div>
@@ -147,38 +153,37 @@ export default function AboutPage() {
 
             {/* Story Section */}
             <section className="py-16 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-                            Our Story
-                        </h2>
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+                        Our Story
+                    </h2>
 
-                        <div className="prose prose-lg max-w-none text-gray-700">
-                            <p className="mb-6">
-                                Golden Hearts was born from a personal experience. Our founder, Sarah Johnson,
-                                watched her grandmother struggle to find meaningful ways to stay engaged after retirement.
-                                Despite having decades of valuable experience and a desire to help others, she found it
-                                difficult to discover volunteering opportunities that matched her interests and abilities.
-                            </p>
+                    <div className="prose prose-lg max-w-none text-gray-700">
+                        <p className="mb-6">
+                            Golden Hearts was born from a personal experience. Our founder, Zach Fetter,
+                            watched his grandmother struggle to find meaningful ways to stay engaged after retirement.
+                            Despite having decades of valuable experience and a desire to help others, she found it
+                            difficult to discover volunteering opportunities that matched her interests and abilities.
+                        </p>
 
-                            <p className="mb-6">
-                                This challenge inspired Sarah to create a platform specifically designed for older adults—one
-                                that would make it easy to find rewarding opportunities, connect with like-minded individuals,
-                                and make a real difference in their communities.
-                            </p>
+                        <p className="mb-6">
+                            This challenge inspired Zach to create a platform that would make it easy for people of all ages
+                            to find rewarding opportunities, connect with like-minded individuals,
+                            and make a real difference in their communities. While we started with a focus on older adults,
+                            we quickly realized that our approach benefits volunteers of every age.
+                        </p>
 
-                            <p className="mb-6">
-                                What started as a simple idea has grown into a thriving community of volunteers,
-                                organizations, and community leaders working together to create positive change.
-                                Today, Golden Hearts serves thousands of volunteers across the country, helping them
-                                find purpose, build connections, and contribute to causes they care about.
-                            </p>
+                        <p className="mb-6">
+                            What started as a simple idea has grown into a thriving community of volunteers,
+                            organizations, and community leaders working together to create positive change.
+                            Today, Golden Hearts serves thousands of volunteers across the country, helping them
+                            find purpose, build connections, and contribute to causes they care about.
+                        </p>
 
-                            <p>
-                                Our journey is just beginning, and we're excited to continue expanding our reach
-                                and impact, one golden heart at a time.
-                            </p>
-                        </div>
+                        <p>
+                            Our journey is just beginning, and we're excited to continue expanding our reach
+                            and impact, welcoming volunteers of all ages to join our mission of building stronger communities.
+                        </p>
                     </div>
                 </div>
             </section>
@@ -199,8 +204,12 @@ export default function AboutPage() {
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {team.map((member, index) => (
                             <div key={index} className="text-center">
-                                <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                                    <Heart className="h-16 w-16 text-gray-400" />
+                                <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
+                                    <img
+                                        src={member.image}
+                                        alt={`${member.name} - ${member.role}`}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
                                 <h3 className="text-xl font-semibold text-gray-900 mb-1">{member.name}</h3>
                                 <p className="text-blue-600 font-medium mb-3">{member.role}</p>
@@ -219,7 +228,7 @@ export default function AboutPage() {
                     </h2>
                     <p className="text-xl mb-8 text-blue-100">
                         Whether you're looking to volunteer or want to learn more about how we're building
-                        stronger communities, we'd love to hear from you.
+                        stronger communities, we'd love to hear from you. All ages and experience levels welcome!
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link href="/register" className="btn-primary bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-3">
