@@ -1,10 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Heart, Eye, EyeOff, User, Mail, Phone, MapPin, Calendar, Clock, CheckCircle } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
 
 interface FormData {
   firstName: string;
@@ -21,8 +19,6 @@ interface FormData {
 }
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const { user, signUp, loading: authLoading } = useAuth();
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -43,13 +39,6 @@ export default function RegisterPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const totalSteps = 3;
-
-  // Redirect if user is already logged in
-  useEffect(() => {
-    if (user && !authLoading) {
-      router.push('/dashboard');
-    }
-  }, [user, authLoading, router]);
 
   const availableInterests = [
     'Animal Welfare', 'Education', 'Healthcare', 'Environment', 'Community Service',
@@ -108,21 +97,12 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     setError(null);
-    
-    try {
-      const { error } = await signUp(formData.email, formData.password, formData);
-      
-      if (error) {
-        setError(error.message);
-      } else {
-        // The redirect will happen automatically via useEffect
-        // No need to manually redirect here
-      }
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
-    } finally {
+
+    // Simulate registration for now
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      setError('This is a demo - no actual registration functionality yet');
+    }, 1000);
   };
 
   const nextStep = () => {
@@ -412,20 +392,6 @@ export default function RegisterPage() {
       </div>
     </div>
   );
-
-  // Show loading while checking auth state
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-muted flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  // Don't render registration form if user is already authenticated
-  if (user) {
-    return null;
-  }
 
   return (
     <div className="min-h-screen bg-muted py-12 px-4 sm:px-6 lg:px-8">
