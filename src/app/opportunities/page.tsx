@@ -160,12 +160,12 @@ export default function OpportunitiesPage() {
         {/* Opportunities Grid */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
           {opportunities.map((opportunity) => (
-            <div key={opportunity.id} className="card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+            <div key={opportunity.id} className="card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer group flex flex-col h-full">
               <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
                 <Heart className="h-12 w-12 text-gray-400" />
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 px-4">
                 <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mb-2">
                   {opportunity.category}
                 </span>
@@ -173,7 +173,7 @@ export default function OpportunitiesPage() {
                   href={`/opportunities/${opportunity.id}`}
                   className="block hover:text-blue-600 transition-colors"
                 >
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-blue-600">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-blue-600 group-hover:text-blue-600">
                     {opportunity.title}
                   </h3>
                 </Link>
@@ -181,7 +181,7 @@ export default function OpportunitiesPage() {
                 <p className="text-gray-600 text-sm mb-4">{opportunity.description}</p>
               </div>
 
-              <div className="space-y-2 mb-4">
+              <div className="space-y-2 mb-4 px-4">
                 <div className="flex items-center text-sm text-gray-500">
                   <MapPin className="h-4 w-4 mr-2" />
                   {opportunity.location}
@@ -197,7 +197,7 @@ export default function OpportunitiesPage() {
               </div>
 
               {/* Skills */}
-              <div className="mb-4">
+              <div className="mb-4 px-4">
                 <p className="text-sm text-gray-600 mb-2">Skills needed:</p>
                 <div className="flex flex-wrap gap-2">
                   {opportunity.skills.map((skill) => (
@@ -208,23 +208,15 @@ export default function OpportunitiesPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
+              {/* Bottom section - always at bottom */}
+              <div className="mt-auto flex items-center justify-between px-4 py-2">
                 <div className="flex items-center">
                   <Star className="h-4 w-4 text-yellow-400 mr-1" />
                   <span className="text-sm text-gray-600">{opportunity.rating}</span>
                 </div>
-                <div className="flex space-x-2">
-                  <Link
-                    href={`/opportunities/${opportunity.id}`}
-                    className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline transition-colors flex items-center space-x-1"
-                  >
-                    <span>View Details</span>
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
-                  <button className="btn-primary">
-                    Apply Now
-                  </button>
-                </div>
+                <button className="btn-primary">
+                  Apply Now
+                </button>
               </div>
             </div>
           ))}

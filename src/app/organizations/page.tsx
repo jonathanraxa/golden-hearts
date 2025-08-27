@@ -256,7 +256,7 @@ export default function OrganizationsPage() {
                 {/* Organizations Grid */}
                 <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
                     {filteredOrganizations.map((org) => (
-                        <div key={org.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                        <div key={org.id} className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                             {/* Organization Header */}
                             <div className="p-6 border-b border-gray-100">
                                 <div className="flex items-start space-x-4">
@@ -292,7 +292,7 @@ export default function OrganizationsPage() {
                             </div>
 
                             {/* Organization Details */}
-                            <div className="p-6">
+                            <div className="p-6 flex flex-col h-full">
                                 <div className="mb-4">
                                     <h4 className="font-medium text-gray-900 mb-2">Mission</h4>
                                     <p className="text-gray-600 text-sm leading-relaxed">{org.mission}</p>
@@ -309,34 +309,37 @@ export default function OrganizationsPage() {
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center">
-                                        <Star className="h-4 w-4 text-yellow-400 mr-1" />
-                                        <span className="text-sm text-gray-600">{org.rating}</span>
+                                {/* Bottom section - always at bottom */}
+                                <div className="mt-auto space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center">
+                                            <Star className="h-4 w-4 text-yellow-400 mr-1" />
+                                            <span className="text-sm text-gray-600">{org.rating}</span>
+                                        </div>
+                                        <span className="text-xs text-gray-500">Founded {org.founded}</span>
                                     </div>
-                                    <span className="text-xs text-gray-500">Founded {org.founded}</span>
-                                </div>
 
-                                {/* Action Buttons */}
-                                <div className="flex space-x-3">
-                                    <Link
-                                        href={`/organizations/${org.id}`}
-                                        className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                                    >
-                                        <Heart className="h-4 w-4" />
-                                        <span>Learn More</span>
-                                    </Link>
-                                    {org.website && (
-                                        <a
-                                            href={org.website}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center justify-center space-x-2 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                                    {/* Action Buttons */}
+                                    <div className="flex space-x-3">
+                                        <Link
+                                            href={`/organizations/${org.id}`}
+                                            className="flex-1 flex items-center justify-center space-x-2 bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                                         >
-                                            <ExternalLink className="h-4 w-4" />
-                                            <span>Website</span>
-                                        </a>
-                                    )}
+                                            <Heart className="h-4 w-4" />
+                                            <span>Learn More</span>
+                                        </Link>
+                                        {org.website && (
+                                            <a
+                                                href={org.website}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center justify-center space-x-2 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                                            >
+                                                <ExternalLink className="h-4 w-4" />
+                                                <span>Website</span>
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

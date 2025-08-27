@@ -61,12 +61,6 @@ export default function AboutPage() {
             bio: "Product and design lead with a passion for creating intuitive and user-friendly digital experiences.",
             image: "/david.jpeg"
         },
-        {
-            name: "Dr. Maria Rodriguez",
-            role: "Community Director",
-            bio: "Community psychologist specializing in social connection and volunteer engagement research.",
-            image: "/api/placeholder/150/150"
-        },
     ];
 
     return (

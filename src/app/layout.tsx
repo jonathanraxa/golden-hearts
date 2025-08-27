@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import SupabaseStatus from "@/components/SupabaseStatus";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,16 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans antialiased bg-gray-50 dark:bg-gray-900 transition-colors duration-200`}
+        className={`${inter.variable} font-sans antialiased bg-gray-50 transition-colors duration-200`}
       >
-        <ThemeProvider>
-          <AuthProvider>
-            <Navigation />
-            <main className="min-h-screen pt-16">
-              {children}
-            </main>
-          </AuthProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <Navigation />
+          <main className="min-h-screen pt-16">
+            {children}
+          </main>
+          <SupabaseStatus />
+        </AuthProvider>
       </body>
     </html>
   );

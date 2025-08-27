@@ -12,14 +12,14 @@ export default function HomePage() {
             <h1 className="text-5xl md:text-6xl font-bold">Golden Hearts</h1>
           </div>
           <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-            Connect with volunteering opportunities and build meaningful relationships in your community. 
+            Connect with volunteering opportunities and build meaningful relationships in your community.
             A platform designed for everyone who wants to make a difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/opportunities" className="btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-100">
               Find Opportunities
             </Link>
-            <Link href="/register" className="btn-secondary text-lg px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-blue-600">
+            <Link href="/register" className="btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-100">
               Join Our Community
             </Link>
           </div>
@@ -59,75 +59,85 @@ export default function HomePage() {
               Discover meaningful ways to give back to your community
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
+                id: 1,
                 title: "Senior Companion Program",
-                organization: "Community Care Services",
-                location: "San Francisco, CA",
-                duration: "2-4 hours/week",
+                organization: "Golden Age Foundation",
+                location: "Community Center",
+                duration: "2-3 hours/week",
                 volunteers: 12,
                 rating: 4.8,
                 category: "Social Services"
               },
               {
-                title: "Urban Garden Maintenance",
-                organization: "Green Thumbs Collective",
-                location: "Oakland, CA",
-                duration: "3-5 hours/week",
+                id: 2,
+                title: "Reading Buddies",
+                organization: "Literacy First",
+                location: "Local Library",
+                duration: "1-2 hours/week",
                 volunteers: 8,
                 rating: 4.9,
-                category: "Environment"
+                category: "Education"
               },
               {
-                title: "Animal Shelter Support",
-                organization: "Paws & Hearts Shelter",
-                location: "San Jose, CA",
-                duration: "4-6 hours/week",
+                id: 3,
+                title: "Community Garden Maintenance",
+                organization: "Green Thumbs Collective",
+                location: "Community Garden",
+                duration: "3-4 hours/week",
                 volunteers: 15,
                 rating: 4.7,
-                category: "Animal Welfare"
+                category: "Environment"
               }
             ].map((opportunity, index) => (
-              <div key={index} className="card hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-                <div className="p-6">
-                  <span className="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm font-medium px-3 py-1 rounded-full mb-3">
+              <Link
+                key={index}
+                href={`/opportunities/${opportunity.id}`}
+                className="card hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer group flex flex-col h-full"
+              >
+                <div className="p-4 flex flex-col h-full">
+                  <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full mb-3">
                     {opportunity.category}
                   </span>
-                  <h3 className="text-xl font-semibold text-primary mb-2">{opportunity.title}</h3>
+                  <h3 className="text-xl font-semibold text-primary mb-2 group-hover:text-blue-600 transition-colors">
+                    {opportunity.title}
+                  </h3>
                   <p className="text-secondary mb-4">{opportunity.organization}</p>
-                  
+
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-sm text-muted">
+                    <div className="flex items-center text-sm">
                       <MapPin className="h-4 w-4 mr-2" />
                       {opportunity.location}
                     </div>
-                    <div className="flex items-center text-sm text-muted">
+                    <div className="flex items-center text-sm">
                       <Clock className="h-4 w-4 mr-2" />
                       {opportunity.duration}
                     </div>
-                    <div className="flex items-center text-sm text-muted">
+                    <div className="flex items-center text-sm">
                       <Users className="h-4 w-4 mr-2" />
                       {opportunity.volunteers} volunteers
                     </div>
                   </div>
-                  
-                  <div className="flex items-center justify-between">
+
+                  {/* Bottom section - always at bottom */}
+                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-200">
                     <div className="flex items-center">
                       <Star className="h-4 w-4 text-yellow-400 mr-1" />
                       <span className="text-sm text-muted">{opportunity.rating}</span>
                     </div>
-                    <Link href="/opportunities" className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline transition-colors flex items-center space-x-1">
-                      <span>Learn More</span>
-                      <ArrowRight className="h-3 w-3" />
-                    </Link>
+                    <div className="text-blue-600 group-hover:text-blue-700 text-sm font-medium transition-colors flex items-center space-x-1">
+                      <span>View Details</span>
+                      <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <Link href="/opportunities" className="btn-primary text-lg px-8 py-3">
               View All Opportunities
@@ -145,31 +155,31 @@ export default function HomePage() {
               Our platform is designed to make volunteering accessible, meaningful, and enjoyable for everyone
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto">
-                <Heart className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                <Heart className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-primary">Meaningful Impact</h3>
               <p className="text-secondary">
                 Connect with causes that matter to you and see the real difference you make in your community
               </p>
             </div>
-            
+
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto">
-                <Users className="h-8 w-8 text-green-600 dark:text-green-400" />
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <Users className="h-8 w-8 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold text-primary">Build Community</h3>
               <p className="text-secondary">
                 Meet like-minded people, form lasting friendships, and become part of a supportive network
               </p>
             </div>
-            
+
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto">
-                <Clock className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
+                <Clock className="h-8 w-8 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold text-primary">Flexible Commitment</h3>
               <p className="text-secondary">

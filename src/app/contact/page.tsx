@@ -113,32 +113,15 @@ export default function ContactPage() {
                                         onClick={handleEmailClick}
                                         className="text-blue-600 hover:text-blue-800 font-medium hover:underline transition-colors"
                                     >
-                                        jonathanraxa@gmail.com
+                                        support@goldenhearts.com
                                     </button>
                                 </div>
                             </div>
 
-                            {/* Phone */}
-                            <div className="flex items-start space-x-4">
-                                <div className="p-3 bg-green-100 rounded-lg">
-                                    <Phone className="h-6 w-6 text-green-600" />
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="font-semibold text-gray-900 mb-1">Call Us</h3>
-                                    <p className="text-gray-600 mb-2">
-                                        Prefer to talk? Give us a call during business hours.
-                                    </p>
-                                    <a
-                                        href="tel:+1-555-0123"
-                                        className="text-green-600 hover:text-green-800 font-medium hover:underline transition-colors"
-                                    >
-                                        +1 (555) 012-3456
-                                    </a>
-                                </div>
-                            </div>
+
 
                             {/* Location */}
-                            <div className="flex items-start space-x-4">
+                            {/* <div className="flex items-start space-x-4">
                                 <div className="p-3 bg-purple-100 rounded-lg">
                                     <MapPin className="h-6 w-6 text-purple-600" />
                                 </div>
@@ -152,7 +135,7 @@ export default function ContactPage() {
                                         San Francisco, CA 94102
                                     </p>
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* Hours */}
                             <div className="flex items-start space-x-4">
