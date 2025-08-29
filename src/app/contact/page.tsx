@@ -18,7 +18,6 @@ export default function ContactPage() {
         message: ''
     });
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -28,23 +27,21 @@ export default function ContactPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
-        setError(null);
 
-        try {
-            // Simulate form submission (replace with actual API call)
-            await new Promise(resolve => setTimeout(resolve, 1000));
+        // Create mailto link with form data
+        const subject = encodeURIComponent(formData.subject);
+        const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
+        const mailtoLink = `mailto:jonathanraxa@gmail.com?subject=${subject}&body=${body}`;
 
-            setShowSuccess(true);
-            setFormData({ name: '', email: '', subject: '', message: '' });
+        // Open email client
+        window.location.href = mailtoLink;
 
-            // Reset success message after 5 seconds
-            setTimeout(() => setShowSuccess(false), 5000);
-        } catch (err) {
-            setError('Failed to send message. Please try again.');
-        } finally {
-            setIsSubmitting(false);
-        }
+        // Show success message
+        setShowSuccess(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+
+        // Reset success message after 5 seconds
+        setTimeout(() => setShowSuccess(false), 5000);
     };
 
     const handleEmailClick = () => {
@@ -239,20 +236,10 @@ export default function ContactPage() {
 
                             <button
                                 type="submit"
-                                disabled={isSubmitting}
-                                className="w-full flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                             >
-                                {isSubmitting ? (
-                                    <>
-                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                        <span>Sending...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send className="h-4 w-4" />
-                                        <span>Send Message</span>
-                                    </>
-                                )}
+                                <Send className="h-4 w-4" />
+                                <span>Send Message</span>
                             </button>
                         </form>
 

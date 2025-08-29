@@ -1,20 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Only create the client on the client side
-let supabase: any = null;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-if (typeof window !== 'undefined') {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn('Missing Supabase environment variables');
-  } else {
-    supabase = createClient(supabaseUrl, supabaseAnonKey);
-  }
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
 }
 
-export { supabase }
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Database types for better TypeScript support
 export interface Database {
